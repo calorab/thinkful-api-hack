@@ -1,25 +1,25 @@
-startup = () => {
+startup = function() {
     $('.boredMain').hide();
     $('.boredResult').hide();
     $('.googleResults').hide();
     $('.welcome').show();
 };
 
-onGetStarted = () => {
+onGetStarted = function() {
     $('.boredMain').show();
     $('.boredResult').hide();
     $('.googleResults').hide();
     $('.welcome').hide();
 };
 
-onGetActivity = () => {
+onGetActivity = function() {
     $('.boredMain').hide();
     $('.boredResult').show();
     $('.googleResults').hide();
     $('.welcome').hide();
 };
 
-onGetGoogle = () => {
+onGetGoogle = function() {
     $('.boredMain').hide();
     $('.boredResult').hide();
     $('.googleResults').show();
@@ -27,30 +27,33 @@ onGetGoogle = () => {
 };
 
 // API Functions here:
-// fetchActivity = () => {}; need 2 more for \Free and \accessibility ??
-// fetchGoogle = () => {};
-
-$(".getStarted").onclick( () => {
-    onGetStarted();
+// fetchActivity = function() {}; ... need 2 more for \Free and \accessibility ??
+// fetchGoogle = function() {};
+$(document).ready(function() {
+    $('.getStarted').on('click', function() {
+        console.log('you clicked get started');
+        // onGetStarted();
+    });
 });
 
-$(".getActivity").onclick( () => {
+
+$('.getActivity').click(function() {
     // call Bored App API
 });
 
-$(".findFree").onclick( () => {
+$('.findFree').click(function() {
     // call Bored App API - Free
 });
 
-$(".findEasy").onclick( () => {
+$('.findEasy').click(function() {
     // call Bored App API - accessibility
 });
 
-$(".repeat").onclick( () => {
+$('.repeat').click(function() {
     // repeat call Bored App API
 });
 
-$(".googleIt").onclick( () => {
+$('.googleIt').click(()  => {
     // call Google API 
 });
 
