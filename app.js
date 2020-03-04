@@ -26,7 +26,7 @@ onGetGoogle = function() {
     $('.welcome').hide();
 };
 
-// API Functions here: Key for SERPAPI: 8408BAE7A9E14665A3F8D5E360C106BB
+// API Functions here: 
 fetchActivity = () => {
     let url = 'http://www.boredapi.com/api/activity';
     fetch(url)
@@ -39,7 +39,27 @@ fetchActivity = () => {
         .catch(err => {console.log('onFetch error: ', err)});
 }; 
 
-// fetchGoogle = function() {};
+// Key for SERPAPI: 8408BAE7A9E14665A3F8D5E360C106BB
+// https://api.scaleserp.com/search?api_key=8408BAE7A9E14665A3F8D5E360C106BB&q=bitcoin example
+fetchGoogle = () => {
+    let apiKey = "8408BAE7A9E14665A3F8D5E360C106BB"
+    let query = "bitcoin"
+    let url = 'https://api.scaleserp.com/search?api_key=' + apiKey + '&q=' + query;
+
+    fetch(url)
+        .then(response => {
+            console.log(response);
+            return response;
+        })
+        .then(result => {
+            console.log('result body: ', result.json());
+        })
+        .catch(err => {
+            console.log('fetch error: ', err);
+        });
+};
+
+
 $(document).ready(function() {
     $('.getStarted').on('click', function() {
         console.log('you clicked get started');
@@ -69,4 +89,5 @@ $(document).ready(function() {
 
 
 $(startup);
-$(fetchActivity);
+// $(fetchActivity); //tested
+$(fetchGoogle);
