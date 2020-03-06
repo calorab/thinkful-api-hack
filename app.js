@@ -26,6 +26,17 @@ onGetGoogle = function() {
     $('.welcome').hide();
 };
 
+displayActivityData = (data) => {
+    let output = `
+        <div class="activityContainer">
+            <h2 class="activityName">${data.activity}</h2>
+            <p class="rating">Search more about this activity?</p>
+            <button class="repeatActivitySearch" type="button" onClick={fetchActivity()}>No, search again!</button>
+            <button class="googleIt">Let's DO IT!</button>
+        </div>`;
+    $('.boredResult').html(output);
+};
+
 // API Functions here: 
 fetchActivity = () => {
     let url = 'http://www.boredapi.com/api/activity';
@@ -34,6 +45,8 @@ fetchActivity = () => {
             return response.json();
         })
         .then(result => {
+            onGetActivity();
+            displayActivityData(result);
             console.log(result);
         })
         .catch(err => {console.log('onFetch error: ', err)});
@@ -62,32 +75,32 @@ fetchGoogle = () => {
 
 $(document).ready(function() {
     $('.getStarted').on('click', function() {
-        console.log('you clicked get started');
-        // onGetStarted();
+        onGetStarted();
     });
 
     $('.getActivity').click(function() {
         // call Bored App API
+        fetchActivity();
     });
     
-    $('.findFree').click(function() {
+    $('.repeatActivitySearch').click(function() {
         // call Bored App API - Free
     });
     
-    $('.findEasy').click(function() {
-        // call Bored App API - accessibility
-    });
+    // $('.findEasy').click(function() {
+    //     // call Bored App API - accessibility
+    // });
     
     $('.repeat').click(function() {
         // repeat call Bored App API
+        fetchActivity();
     });
     
     $('.googleIt').click(()  => {
         // call Google API 
+        fetchGoogle();
     });
 });
 
 
 $(startup);
-// $(fetchActivity); //tested
-$(fetchGoogle);
