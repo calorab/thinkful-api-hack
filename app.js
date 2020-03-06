@@ -31,8 +31,8 @@ displayActivityData = (data) => {
         <div class="activityContainer">
             <h2 class="activityName">${data.activity}</h2>
             <p class="rating">Search more about this activity?</p>
-            <button class="repeatActivitySearch" type="button" onClick={fetchActivity()}>No, search again!</button>
-            <button class="googleIt">Let's DO IT!</button>
+            <button class="repeatActivitySearch" type="button" onClick={fetchActivity()}>No, search again...</button>
+            <button class="googleIt" type="button" onClick={fetchGoogle()}>Let's DO IT!</button>
         </div>`;
     $('.boredResult').html(output);
 };
@@ -49,19 +49,25 @@ fetchActivity = () => {
             displayActivityData(result);
             console.log(result);
         })
-        .catch(err => {console.log('onFetch error: ', err)});
+        .catch(err => {
+            console.log('onFetch error: ', err);
+        });
 }; 
 
 // Key for SERPAPI: 8408BAE7A9E14665A3F8D5E360C106BB
 // https://api.scaleserp.com/search?api_key=8408BAE7A9E14665A3F8D5E360C106BB&q=bitcoin example
 fetchGoogle = () => {
+    console.log('fetchGoogle firing');
     let apiKey = "8408BAE7A9E14665A3F8D5E360C106BB"
     let query = "bitcoin"
     let url = 'https://api.scaleserp.com/search?api_key=' + apiKey + '&q=' + query;
 
     fetch(url)
         .then(response => {
-            console.log(response);
+            console.log('fetchGoogle response: ', response);
+            if (response.status === 402 || 429) {
+                throw new Error('It looks like we \'ve made too many calls this month! Please try again another day.')
+            }
             return response;
         })
         .then(result => {
@@ -69,6 +75,8 @@ fetchGoogle = () => {
         })
         .catch(err => {
             console.log('fetch error: ', err);
+            let errMessage = `<p>${err.message}</p>`;
+            $('.boredResult').html(errMessage);
         });
 };
 
