@@ -37,6 +37,23 @@ displayActivityData = (data) => {
     $('.boredResult').html(output);
 };
 
+displayGoogleData = (data) => {
+
+    //MAP THIS CALEB
+
+    let output = `
+        <div class="googleContainer">
+            <a href="I LINK HERE">
+                <h2 class="googleItemName"></h2>
+                <p class="googleItemTitle">"I TITLE HERE"</p>
+                <P class="googleItemSnippet">"I SNIPPET HERE"</P>
+                <p>"I snippet_matched[0] HERE"</p>
+                <p>"I snippet_matched[1] HERE"</p>
+                <p>"I snippet_matched[2] HERE"</p>
+            </a>
+        </div>`;
+};
+
 // API Functions here: 
 fetchActivity = () => {
     let url = 'http://www.boredapi.com/api/activity';
@@ -54,6 +71,7 @@ fetchActivity = () => {
         });
 }; 
 
+
 // Key for SERPAPI: 8408BAE7A9E14665A3F8D5E360C106BB
 // https://api.scaleserp.com/search?api_key=8408BAE7A9E14665A3F8D5E360C106BB&q=bitcoin example
 fetchGoogle = () => {
@@ -64,14 +82,16 @@ fetchGoogle = () => {
 
     fetch(url)
         .then(response => {
-            console.log('fetchGoogle response: ', response);
-            if (response.status === 402 || 429) {
-                throw new Error('It looks like we \'ve made too many calls this month! Please try again another day.')
+            if (response.status === 429 || response.status === 402) {
+                throw new Error('It looks like we \'ve made too many API calls this month! Please try again another day.');
             }
-            return response;
+            return response.json();
         })
         .then(result => {
-            console.log('result body: ', result.json());
+            console.log('result body: ', result);
+            let testresult = result.organic_results;
+            //display results CALEB...
+            console.log('result: ', testresult);
         })
         .catch(err => {
             console.log('fetch error: ', err);
