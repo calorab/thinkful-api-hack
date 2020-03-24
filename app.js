@@ -38,20 +38,13 @@ displayActivityData = (data) => {
 };
 
 displayGoogleData = (data) => {
-
-    //MAP THIS CALEB
-
-    let output = `
-        <div class="googleContainer">
-            <a href="I LINK HERE">
-                <h2 class="googleItemName"></h2>
-                <p class="googleItemTitle">"I TITLE HERE"</p>
-                <P class="googleItemSnippet">"I SNIPPET HERE"</P>
-                <p>"I snippet_matched[0] HERE"</p>
-                <p>"I snippet_matched[1] HERE"</p>
-                <p>"I snippet_matched[2] HERE"</p>
-            </a>
-        </div>`;
+    return `
+    <div class="googleContainer">
+        <a href=${data.link} target="_blank">
+            <h4 class="googleItemTitle">${data.title}</h4>
+            <P class="googleItemSnippet">${data.snippet}</P>
+        </a>
+    </div>`;
 };
 
 // API Functions here: 
@@ -75,7 +68,7 @@ fetchActivity = () => {
 // Key for SERPAPI: 8408BAE7A9E14665A3F8D5E360C106BB
 // https://api.scaleserp.com/search?api_key=8408BAE7A9E14665A3F8D5E360C106BB&q=bitcoin example
 fetchGoogle = () => {
-    console.log('fetchGoogle firing');
+    console.log('fetchGoogle fired');
     let apiKey = "8408BAE7A9E14665A3F8D5E360C106BB"
     let query = $('.activityName').text();
     let url = 'https://api.scaleserp.com/search?api_key=' + apiKey + '&q=' + query;
@@ -88,10 +81,11 @@ fetchGoogle = () => {
             return response.json();
         })
         .then(result => {
-            console.log('result body: ', result);
-            let testresult = result.organic_results;
-            //display results CALEB...
-            console.log('result: ', testresult);
+            let searchResults = result.organic_results;
+            console.log('result: ', searchResults);
+            onGetGoogle();
+            let output = searchResults.map(item => displayGoogleData(item));   
+            $('.googleResults').html(output);
         })
         .catch(err => {
             console.log('fetch error: ', err);
