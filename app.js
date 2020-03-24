@@ -29,7 +29,7 @@ onGetGoogle = function() {
 displayActivityData = (data) => {
     let output = `
         <div class="activityContainer">
-            <h2 class="activityName">${data.activity}</h2>
+            <h2 class="activityName" >${data.activity}</h2>
             <p class="rating">Search more about this activity?</p>
             <button class="repeatActivitySearch" type="button" onClick={fetchActivity()}>No, search again...</button>
             <button class="googleIt" type="button" onClick={fetchGoogle()}>Let's DO IT!</button>
@@ -77,7 +77,7 @@ fetchActivity = () => {
 fetchGoogle = () => {
     console.log('fetchGoogle firing');
     let apiKey = "8408BAE7A9E14665A3F8D5E360C106BB"
-    let query = "bitcoin"
+    let query = $('.activityName').text();
     let url = 'https://api.scaleserp.com/search?api_key=' + apiKey + '&q=' + query;
 
     fetch(url)
